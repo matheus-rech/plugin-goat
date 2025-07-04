@@ -1,57 +1,71 @@
 {
-    "name": "@elizaos-plugins/plugin-goat",
-    "version": "0.1.9",
-    "type": "module",
-    "main": "dist/index.js",
-    "module": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "exports": {
-        "./package.json": "./package.json",
-        ".": {
-            "import": {
-                "@elizaos/source": "./src/index.ts",
-                "types": "./dist/index.d.ts",
-                "default": "./dist/index.js"
-            }
-        }
-    },
-    "files": [
-        "dist"
-    ],
-    "dependencies": {
-        "@goat-sdk/adapter-vercel-ai": "0.2.0",
-        "@goat-sdk/core": "0.4.6",
-        "@goat-sdk/plugin-erc20": "0.2.2",
-        "@goat-sdk/plugin-kim": "0.1.2",
-        "@goat-sdk/wallet-evm": "0.2.0",
-        "@goat-sdk/wallet-viem": "0.2.0",
-        "tsup": "8.3.5"
-    },
-    "scripts": {
-        "build": "tsup --format esm --dts",
-        "dev": "tsup --format esm --dts --watch",
-        "lint": "biome lint .",
-        "lint:fix": "biome check --apply .",
-        "format": "biome format .",
-        "format:fix": "biome format --write ."
-    },
-    "devDependencies": {
-        "@biomejs/biome": "1.9.4"
-    },
-    "peerDependencies": {
-        "whatwg-url": "7.1.0"
-    },
-    "agentConfig": {
-        "pluginType": "elizaos:plugin:1.0.0",
-        "pluginParameters": {
-            "EVM_PRIVATE_KEY": {
-                "type": "string",
-                "description": "EVM private key"
-            },
-            "EVM_PROVIDER_URL": {
-                "type": "string",
-                "description": "EVM provider URL"
-            }
-        }
+  "name": "@elizaos/plugin-goat",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "@elizaos/source": "./src/index.ts",
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
     }
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@elizaos/core": "latest",
+    "@goat-sdk/adapter-vercel-ai": "0.2.0",
+    "@goat-sdk/core": "0.4.6",
+    "@goat-sdk/plugin-erc20": "0.2.2",
+    "@goat-sdk/plugin-kim": "0.1.2",
+    "@goat-sdk/wallet-evm": "0.2.0",
+    "@goat-sdk/wallet-viem": "0.2.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "prettier --write ./src",
+    "clean": "rm -rf dist .turbo node_modules .turbo-tsconfig.json tsconfig.tsbuildinfo",
+    "format": "prettier --write ./src",
+    "format:check": "prettier --check ./src",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "test:coverage": "bun test --coverage"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "tsup": "8.3.5",
+    "prettier": "^3.0.0",
+    "bun": "^1.2.15",
+    "@types/bun": "latest",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "whatwg-url": "7.1.0"
+  },
+  "agentConfig": {
+    "pluginType": "elizaos:plugin:1.0.0",
+    "pluginParameters": {
+      "EVM_PRIVATE_KEY": {
+        "type": "string",
+        "description": "EVM private key",
+        "required": true,
+        "sensitive": true
+      },
+      "EVM_PROVIDER_URL": {
+        "type": "string",
+        "description": "EVM provider URL",
+        "required": true,
+        "sensitive": false
+      }
+    }
+  }
 }
